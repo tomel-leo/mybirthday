@@ -434,27 +434,46 @@ messagesRef.on('value', snapshot => {
   })).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
   
   messageArray.forEach(m => {
-    const div = document.createElement('div');
-    div.className = 'message';
-    
-    const initial = m.name.charAt(0).toUpperCase();
-    
-    div.innerHTML = `
-      <div class="message-header">
-        <div class="message-avatar">${initial}</div>
-        <div class="message-name">${m.name}</div>
-      </div>
-      <div class="message-wish">${m.wish.replace(/\n/g,'<br>')}</div>
-      <div class="message-signature">
-        <img src="${m.signature}" alt="Signature">
-      </div>
-    `;
-    
-    messagesDiv.appendChild(div);
-  });
+  const div = document.createElement('div');
+  div.className = 'message';
+  
+  const initial = m.name.charAt(0).toUpperCase();
+
+  // Convert timestamp to readable, elegant format
+  const date = new Date(m.timestamp);
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  };
+  const formattedDate = date.toLocaleString('en-US', options);
+
+  div.innerHTML = `
+    <div class="message-header">
+      <div class="message-avatar">${initial}</div>
+      <div class="message-name">${m.name}</div>
+    </div>
+    <div class="message-wish">${m.wish.replace(/\n/g,'<br>')}</div>
+    <div class="message-signature">
+      <img src="${m.signature}" alt="Signature">
+    </div>
+    <div class="message-date" style="color:#999;font-size:0.85em;margin-top:5px;">
+      📅 ${formattedDate}
+    </div>
+  `;
+
+  messagesDiv.appendChild(div);
 });
+
+    
+    
 </script>
 </body>
 </html>
+
 
 
