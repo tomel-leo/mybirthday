@@ -5,37 +5,300 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Olugboye Feranmi Birthday Guestbook</title>
 <style>
-body { font-family: Arial, sans-serif; padding: 20px; background: #fffbe6; }
-h1 { color: #ff6f61; text-align: center; }
-form { margin-bottom: 20px; background: #fff3e0; padding: 15px; border-radius: 10px; max-width: 400px; margin: auto; }
-input, textarea, button { display: block; width: 100%; margin-bottom: 10px; padding: 8px; font-size: 1em; border-radius: 5px; border: 1px solid #ccc; }
-canvas { border: 1px solid #ccc; display: block; margin-bottom: 10px; }
-#messages { max-width: 600px; margin: auto; }
-.message { background: #15b820; border: 1px solid #a3ff99; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+form {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  margin-bottom: 40px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 0.95em;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1em;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.signature-container {
+  margin-bottom: 20px;
+}
+
+canvas {
+  border: 2px dashed #667eea;
+  border-radius: 10px;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 150px;
+  background: #f8f9fa;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.canvas-hint {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  flex: 1;
+  padding: 14px;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#clearCanvas {
+  background: #f44336;
+  color: white;
+}
+
+#clearCanvas:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
+}
+
+button[type="submit"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+button[type="submit"]:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+h2 {
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+#messages {
+  display: grid;
+  gap: 20px;
+}
+
+.message {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.message:hover {
+  transform: translateY(-5px);
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.message-avatar {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.3em;
+}
+
+.message-name {
+  font-weight: 700;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.message-wish {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  font-size: 1em;
+}
+
+.message-signature {
+  border-top: 2px solid #f0f0f0;
+  padding-top: 15px;
+}
+
+.message-signature img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 15px;
+  color: #666;
+}
+
+.empty-state h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  canvas {
+    height: 120px;
+  }
+}
 </style>
 </head>
 <body>
+<div class="container">
+  <h1>🎉 Birthday Guestbook</h1>
+  <p class="subtitle">Welcome to Olugboye Feranmi's Birthday Celebration!</p>
 
-<h1>Welcome to my Birthday Guestbook</h1>
+  <form id="guestbookForm">
+    <div class="form-group">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" placeholder="Enter your name" required>
+    </div>
 
-<form id="guestbookForm">
-  <input type="text" id="name" placeholder="Name" required>
-  <textarea id="wish" placeholder="Birthday Wish" rows="3" required></textarea>
-  <canvas id="signature" width="300" height="100"></canvas>
-  <button type="button" id="clearCanvas">Clear Signature</button>
-  <button type="submit">Submit</button>
-</form>
+    <div class="form-group">
+      <label for="wish">Birthday Wish</label>
+      <textarea id="wish" placeholder="Write your birthday message here..." rows="4" required></textarea>
+    </div>
 
-<h2 style="text-align:center;">Drop a message for me</h2>
-<div id="messages"></div>
+    <div class="signature-container">
+      <label>Your Signature</label>
+      <div class="signature-options">
+        <button type="button" class="option-btn active" id="drawOption">✍️ Draw</button>
+        <button type="button" class="option-btn" id="typeOption">⌨️ Type</button>
+      </div>
+      <canvas id="signature"></canvas>
+      <input type="text" id="typedSignature" class="hidden" placeholder="Type your initials (e.g., OF)" maxlength="5">
+      <div class="canvas-hint" id="drawHint">✍️ Draw your signature above (touch or mouse)</div>
+      <div class="canvas-hint hidden" id="typeHint">⌨️ Type your initials above</div>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="clearCanvas">Clear</button>
+      <button type="submit">🎊 Submit Wish</button>
+    </div>
+  </form>
+
+  <h2>💌 Birthday Messages</h2>
+  <div id="messages">
+    <div class="empty-state">
+      <h3>No messages yet</h3>
+      <p>Be the first to wish Feranmi a happy birthday!</p>
+    </div>
+  </div>
+</div>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
 <script>
-  // ---------- YOUR FIREBASE CONFIG ----------
-  const firebaseConfig = {
+// ---------- YOUR FIREBASE CONFIG ----------
+const firebaseConfig = {
   apiKey: "AIzaSyCfpc8sZRBgLZaIJVO7QUnNfMVnioehG0s",
   authDomain: "birthday-4ed90.firebaseapp.com",
   projectId: "birthday-4ed90",
@@ -44,66 +307,152 @@ canvas { border: 1px solid #ccc; display: block; margin-bottom: 10px; }
   appId: "1:105364733871:web:c29c932a4b7a006437395a",
   measurementId: "G-S7TZMKV05H"
 };
-  // -------------------------------------------
+// -------------------------------------------
 
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-  const messagesRef = db.ref('messages');
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const messagesRef = db.ref('messages');
 
-  const form = document.getElementById('guestbookForm');
-  const nameInput = document.getElementById('name');
-  const wishInput = document.getElementById('wish');
-  const messagesDiv = document.getElementById('messages');
+const form = document.getElementById('guestbookForm');
+const nameInput = document.getElementById('name');
+const wishInput = document.getElementById('wish');
+const messagesDiv = document.getElementById('messages');
 
-  // Canvas setup
-  const canvas = document.getElementById('signature');
-  const ctx = canvas.getContext('2d');
-  let drawing = false;
-  canvas.addEventListener('mousedown', () => drawing = true);
-  canvas.addEventListener('mouseup', () => drawing = false);
-  canvas.addEventListener('mouseleave', () => drawing = false);
-  canvas.addEventListener('mousemove', draw);
+// Canvas setup with mobile touch support
+const canvas = document.getElementById('signature');
+const ctx = canvas.getContext('2d');
 
-  function draw(e) {
-    if (!drawing) return;
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000';
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
+// Set canvas size based on its display size
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+let drawing = false;
+let lastX = 0;
+let lastY = 0;
+
+function startDrawing(e) {
+  drawing = true;
+  const pos = getMousePos(e);
+  lastX = pos.x;
+  lastY = pos.y;
+}
+
+function stopDrawing() {
+  drawing = false;
+}
+
+function draw(e) {
+  if (!drawing) return;
+  e.preventDefault();
+  
+  const pos = getMousePos(e);
+  
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = '#000';
+  
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+  
+  lastX = pos.x;
+  lastY = pos.y;
+}
+
+function getMousePos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+  const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+  
+  return {
+    x: clientX - rect.left,
+    y: clientY - rect.top
+  };
+}
+
+// Mouse events
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseleave', stopDrawing);
+canvas.addEventListener('mousemove', draw);
+
+// Touch events for mobile
+canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchend', stopDrawing);
+canvas.addEventListener('touchcancel', stopDrawing);
+canvas.addEventListener('touchmove', draw);
+
+document.getElementById('clearCanvas').addEventListener('click', () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// Submit message
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  
+  const signatureData = canvas.toDataURL();
+  
+  messagesRef.push({
+    name: nameInput.value,
+    wish: wishInput.value,
+    signature: signatureData,
+    timestamp: Date.now()
+  });
+  
+  form.reset();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  alert('🎉 Thank you for your birthday wish!');
+});
+
+// Display messages live
+messagesRef.on('value', snapshot => {
+  const messages = snapshot.val();
+  messagesDiv.innerHTML = '';
+  
+  if (!messages) {
+    messagesDiv.innerHTML = `
+      <div class="empty-state">
+        <h3>No messages yet</h3>
+        <p>Be the first to wish Feranmi a happy birthday!</p>
+      </div>
+    `;
+    return;
   }
-
-  document.getElementById('clearCanvas').addEventListener('click', () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Convert to array and sort by timestamp (newest first)
+  const messageArray = Object.keys(messages).map(key => ({
+    id: key,
+    ...messages[key]
+  })).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+  
+  messageArray.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'message';
+    
+    const initial = m.name.charAt(0).toUpperCase();
+    
+    div.innerHTML = `
+      <div class="message-header">
+        <div class="message-avatar">${initial}</div>
+        <div class="message-name">${m.name}</div>
+      </div>
+      <div class="message-wish">${m.wish.replace(/\n/g,'<br>')}</div>
+      <div class="message-signature">
+        <img src="${m.signature}" alt="Signature">
+      </div>
+    `;
+    
+    messagesDiv.appendChild(div);
   });
-
-  // Submit message
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const signatureData = canvas.toDataURL();
-    messagesRef.push({
-      name: nameInput.value,
-      wish: wishInput.value,
-      signature: signatureData
-    });
-    form.reset();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  });
-
-  // Display messages live
-  messagesRef.on('value', snapshot => {
-    const messages = snapshot.val();
-    messagesDiv.innerHTML = '';
-    for (let key in messages) {
-      const m = messages[key];
-      const div = document.createElement('div');
-      div.className = 'message';
-      div.innerHTML = `<strong>${m.name}</strong> says:<br>${m.wish.replace(/\n/g,'<br>')}<br><img src="${m.signature}" width="300">`;
-      messagesDiv.appendChild(div);
-    }
-  });
+});
 </script>
 </body>
 </html>
