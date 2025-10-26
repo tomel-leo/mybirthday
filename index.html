@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Olugboye Feranmi Birthday Guestbook</title>
+<title>MyBirthday Guestbook</title>
 <style>
 * {
   margin: 0;
@@ -252,8 +252,8 @@ h2 {
 </head>
 <body>
 <div class="container">
-  <h1>🎉 Birthday Guestbook</h1>
-  <p class="subtitle">Welcome to Olugboye Feranmi's Birthday Celebration!</p>
+  <h1>My Birthday Guestbook</h1>
+  <p class="subtitle">Welcome!</p>
 
   <form id="guestbookForm">
     <div class="form-group">
@@ -269,22 +269,22 @@ h2 {
     <div class="signature-container">
       <label>Your Signature</label>
       <div class="signature-options">
-        <button type="button" class="option-btn active" id="drawOption">✍️ Draw</button>
-        <button type="button" class="option-btn" id="typeOption">⌨️ Type</button>
+        <button type="button" class="option-btn active" id="drawOption">Draw</button>
+        <button type="button" class="option-btn" id="typeOption">Type</button>
       </div>
       <canvas id="signature"></canvas>
       <input type="text" id="typedSignature" class="hidden" placeholder="Type your initials (e.g., OF)" maxlength="5">
-      <div class="canvas-hint" id="drawHint">✍️ Draw your signature above (touch or mouse)</div>
-      <div class="canvas-hint hidden" id="typeHint">⌨️ Type your initials above</div>
+      <div class="canvas-hint" id="drawHint"> Draw your signature above </div>
+      <div class="canvas-hint hidden" id="typeHint">Type your initials above</div>
     </div>
 
     <div class="button-group">
       <button type="button" id="clearCanvas">Clear</button>
-      <button type="submit">🎊 Submit Wish</button>
+      <button type="submit">Submit Wish</button>
     </div>
   </form>
 
-  <h2>💌 Birthday Messages</h2>
+  <h2>Birthday Messages</h2>
   <div id="messages">
     <div class="empty-state">
       <h3>No messages yet</h3>
@@ -456,3 +456,4 @@ messagesRef.on('value', snapshot => {
 </script>
 </body>
 </html>
+
